@@ -66,6 +66,74 @@ Para javascript o ideal seria usar o ESLint. Para isso intale-o usando o npm com
 
 # Entendendo programação assíncrona
 
+Para entender programação assíncrona primeiro vamos dar uma olhada na síncrona. Normalmente quando programamos, a maioria das operações de I/O (entrada e saída) acontecem síncronamente. Porém se você tem varias operações desse tipo, que é o que acontece normalmente em um servidor, nós podemos ficar com uma fila dessa forma
+
+![fila](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/queue.png)
+
+As tarjas vermelhas representam seu servidor parado, sem poder fazer nada, esperando uma resposta externa de algum cliente em específico, as pretas são seu código rodando e as verdes são o restante do tempo.
+
+Agora entrando em programação assíncrona. Em javascript existe um tipo de função chamado **função de alta ordem**. As funções de alta ordem, são aquelas que podem receber uma outra função como parametro. E assim **callbacks** nasceram. Nesses casos, as funções de alta ordem não precisam retornar nada, ao invés disso, elas chamam a função que receberam como parametro passando seu retorno como parametro dela. Ficou confuso? Imaginei! Deixa eu tentar exemplificar:
+
+Digamos que eu tenha o seguinte código, codado usando conceitos de programação síncrona, em node:
+
+```
+const fs = require('fs')
+let content
+try {
+  content = fs.readFileSync('file.md', 'utf-8')
+} catch (ex) {
+  console.log(ex)
+}
+console.log(content)
+```
+
+Perceba que a função readFileSync tem dois possíveis resultados: content, conteúdo do arquivo, ou ex, exceção I/O
+
+Em node existe um tipo de função chamada ```error-first callbacks``` esses callbacks estão no coração desse framework. Eles recebem dois parametros, um erro e um sucesso
+
+Então se eu passar um callback desse para a função de leitura de arquivo, quando a leitura for concluida ele vai chamar o callback mandando ou 'A exceção com sucesso sendo vazio' ou 'O sucesso da leitura do arquivo e o erro sendo igual a vazio'
+
+Nosso código node ficaria assim:
+
+```
+const fs = require('fs')
+
+console.log('start reading a file...')
+
+//tente mudar file.md para README.md e você verá o arquivo ao invés do erro
+fs.readFile('file.md', 'utf-8', function (erro, content) {
+  if (erro) {
+      console.log('erro: '+erro)
+      return console.log('error happened during reading the file')
+  }else{
+    return console.log(content)
+  }
+})
+
+console.log('end of the file')
+```
+
+Então, caso readFile retorne alguma exceção erro será diferente de nulo, o if sera verdadeiro e será impresso na tela o erro e a string 'error happened during reading the file'. Experimente colocar esse codigo no seu index.js e rodar com npm start.
+
+![erro_leitura](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/erroLeitura.PNG)
+
+Perceba que ele imprime _end of the file_ antes de imprimir o erro _no such file_ Isso acontece por que o callback foi chamado após o termino da leitura do arquivo.
+
+## Loop de eventos
+
+O loop de evento é responsável por operações síncronas.
+
+Vamos só relembrar programação baseada em eventos:
+
+```
+programação baseada em eventos é um paradigma computacional em que o fluxo do programa é determinado por eventos como ações de usuario (pressionar teclas, clicar com o mouse), saidas de sensores, mensagens de outros programas, de outras threads, etc.
+```
+
+Do nosso ponto de vista, como desenvolvedores, node tem apenas uma thread. Toda a complexidade de multithreading é abstraida usando a **Magia do Node**.
+
+## Fluxo de controle e promessas
+
+
 # Seu primeiro servidor HTTP usando Node
 
 # Banco de dados em Node
