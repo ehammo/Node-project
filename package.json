@@ -1,0 +1,23 @@
+{
+  "name": "node-project",
+  "version": "1.0.0",
+  "description": "Este projeto serve para ilustrar melhores praticas usando node, bem como explicar em formato de tutorial como usar Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CITi-UFPE/Node-project.git"
+  },
+  "author": "Maia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CITi-UFPE/Node-project/issues"
+  },
+  "homepage": "https://github.com/CITi-UFPE/Node-project#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
