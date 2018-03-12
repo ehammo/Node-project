@@ -13,11 +13,11 @@ Baixe node a partir desse [link](https://nodejs.org/en/download/)
 ## Instalando o NPM e usando o NPM
 
 O node utiliza um sistema de gerenciamento de pacotes javascript chamado NPM, ele pode ser encontrado nesse [link](https://npmjs.com)
-Ou seja, para vocês que já estudaram Django o node usa o NPM é como o Django usa o PIP. No final das contas é um programa para você baixar bibliotecas legais para lhe ajudar a montar uma aplicação.
+Ou seja, para vocês que já estudaram Django, o node usa o NPM como o Django usa o PIP. No final das contas é um programa para você baixar bibliotecas legais para lhe ajudar a montar uma aplicação.
 
 Agora como eu uso? 
 
-Bem similar ao pip, você pode instalar bibliotecas com o comando ```npm install nome_da_biblioteca``` e pode instalar globalmente, neste caso a biblioteca fica armazenada em seu computador e não no em uma pasta do projeto podendo ser usada por qualquer projeto a qualquer momento, usando a opção -g após o comando install: ```npm install -g biblioteca_Global```
+Bem similar ao pip, você pode instalar bibliotecas com o comando ```npm install nome_da_biblioteca``` e pode instalar globalmente usando a opção -g após o comando install: ```npm install -g biblioteca_Global```, neste caso a biblioteca fica armazenada em seu computador e não em uma pasta do projeto. Bibliotecas globais podem ser usadas por qualquer projeto a qualquer momento.
 
 Sempre lembrando de no seu .gitignore acrescentar a pasta node_modules, que contém todas as bibliotecas instaladas. Caso contrario seu projeto fica carregado de dados que poderiam ser re-adquiridos pela internet.
 
