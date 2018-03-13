@@ -45,7 +45,7 @@ Abra o terminal e rode a código: ```npm install express --save``` Agora abra o 
 
 Vamos criar nosso Main. O index.js vai ser o seu arquivo principal, mas ele não deve ser um arquivo grande. Voce inicializa as coisas nele, apenas isso.
 
-Por hora, enquanto eu não expliquei programação assíncrona vamos deixar apenas uma linha de codigo,
+Por hora, enquanto eu não expliquei programação assíncrona vamos deixar apenas uma linha de código,
 
  ```console.log('hello from Node.js')``` dessa forma quando você rodar o servidor, ao invés dele ficar esperando por um pedido do cliente, ele vai apenas imprimir, hello from Node.js
 
@@ -66,13 +66,13 @@ Para javascript o ideal seria usar o ESLint. Para isso intale-o usando o npm com
 
 # Entendendo programação assíncrona
 
-Para entender programação assíncrona primeiro vamos dar uma olhada na síncrona. Normalmente quando programamos, a maioria das operações de I/O (entrada e saída) acontecem síncronamente. Porém se você tem varias operações desse tipo, que é o que acontece normalmente em um servidor, nós podemos ficar com uma fila dessa forma
+Para entender programação assíncrona primeiro vamos dar uma olhada na síncrona. Normalmente quando programamos, a maioria das operações de I/O (entrada e saída) acontecem sincronamente. Porém se você tem várias operações desse tipo, que é o que acontece normalmente em um servidor, nós pudemos ficar com uma fila dessa forma
 
 ![fila](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/queue.png)
 
 As tarjas vermelhas representam seu servidor parado, sem poder fazer nada, esperando uma resposta externa de algum cliente em específico, as pretas são seu código rodando e as verdes são o restante do tempo.
 
-Agora entrando em programação assíncrona. Em javascript existe um tipo de função chamado **função de alta ordem**. As funções de alta ordem, são aquelas que podem receber uma outra função como parametro. E assim **callbacks** nasceram. Nesses casos, as funções de alta ordem não precisam retornar nada, ao invés disso, elas chamam a função que receberam como parametro passando seu retorno como parametro dela. Ficou confuso? Imaginei! Deixa eu tentar exemplificar:
+Agora entrando em programação assíncrona. Em javascript existe um tipo de função chamado **função de alta ordem**. As funções de alta ordem, são aquelas que podem receber uma outra função como parâmetro. E assim **callbacks** nasceram. Nesses casos, as funções de alta ordem não precisam retornar nada, ao invés disso, elas chamam a função que receberam como parâmetro passando seu retorno como parâmetro dela. Ficou confuso? Imaginei! Deixa eu tentar exemplificar:
 
 Digamos que eu tenha o seguinte código, codado usando conceitos de programação síncrona, em node:
 
@@ -89,9 +89,9 @@ console.log(content)
 
 Perceba que a função readFileSync tem dois possíveis resultados: content, conteúdo do arquivo, ou ex, exceção I/O
 
-Em node existe um tipo de função chamada ```error-first callbacks``` esses callbacks estão no coração desse framework. Eles recebem dois parametros, um erro e um sucesso
+Em node existe um tipo de função chamada ```error-first callbacks``` esses callbacks estão no coração desse framework. Eles recebem dois parâmetros, um erro e um sucesso
 
-Então se eu passar um callback desse para a função de leitura de arquivo, quando a leitura for concluida ele vai chamar o callback mandando ou 'A exceção com sucesso sendo vazio' ou 'O sucesso da leitura do arquivo e o erro sendo igual a vazio'
+Então se eu passar um callback desse para a função de leitura de arquivo, quando a leitura for concluída ele vai chamar o callback. Só lembrando, o callback recebe um erro e um conteúdo, mas não necessariamente os dois precisam ser enviados, um deles pode ser nulo. Então, quando a leitura termina, o callback pode ser chamado mandando A exceção e o conteúdo sendo nulo ou o conteúdo da leitura do arquivo e o erro sendo nulo
 
 Nosso código node ficaria assim:
 
@@ -113,7 +113,7 @@ fs.readFile('file.md', 'utf-8', function (erro, content) {
 console.log('end of the file')
 ```
 
-Então, caso readFile retorne alguma exceção erro será diferente de nulo, o if sera verdadeiro e será impresso na tela o erro e a string 'error happened during reading the file'. Experimente colocar esse codigo no seu index.js e rodar com npm start.
+Então, caso readFile retorne alguma exceção erro será diferente de nulo, o if sera verdadeiro e será impresso na tela o erro e a string 'error happened during reading the file'. Experimente colocar esse código no seu index.js e rodar com npm start.
 
 ![erro_leitura](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/erroLeitura.PNG)
 
@@ -126,10 +126,10 @@ O loop de evento é responsável por operações síncronas.
 Vamos só relembrar programação baseada em eventos:
 
 ```
-programação baseada em eventos é um paradigma computacional em que o fluxo do programa é determinado por eventos como ações de usuario (pressionar teclas, clicar com o mouse), saidas de sensores, mensagens de outros programas, de outras threads, etc.
+Programação baseada em eventos é um paradigma computacional em que o fluxo do programa é determinado por eventos como ações de usuário (pressionar teclas, clicar com o mouse), saidas de sensores, mensagens de outros programas, de outras threads, etc.
 ```
 
-Do nosso ponto de vista, como desenvolvedores, node tem apenas uma thread. Toda a complexidade de multithreading é abstraida usando a **Magia do Node**.
+Do nosso ponto de vista, como desenvolvedores, node tem apenas uma thread. Toda a complexidade de multithreading é abstraída usando a **Magia do Node**.
 
 ## Fluxo de controle e promessas
 
@@ -166,7 +166,7 @@ fs.readdir(source, function (err, files) {
 })
 ```
 
-Um bom indicativo são as linhas 162-166 uma piramide de chaves parênteses. Não necessariamente com a mesma funcionalidade, já que o exemplo anterior nos estavamos lendo um diretório, mas segue um exemplo de código usando promessas.
+Um bom indicativo são as linhas 162-166 uma pirâmide de chaves parênteses. Não necessariamente com a mesma funcionalidade, já que o exemplo anterior nos estávamos lendo um diretório, mas segue um exemplo de código usando promessas.
 
 
 ```
@@ -190,13 +190,13 @@ Promise.all([
 .then((data) => console.log(data))
 .catch((err) => console.log(err))
 ```
-Neste exemplo estamos lendo varios arquivos. A função de leitura de um arquivo foi encapsulada em uma promessa. Dessa forma posso executar multiplas promessas, uma seguida da outra e encapsular todas as respostas em um único objeto.
+Neste exemplo estamos lendo vários arquivos. A função de leitura de um arquivo foi encapsulada em uma promessa. Dessa forma posso executar múltiplas promessas, uma seguida da outra e encapsular todas as respostas em um único objeto.
 
 ![promessa1](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/promessa1.PNG)
 
-Perceba também que nesse segundo código a um catch para pegar os erros. Isso significa que, da maneira que esse código foi feito, se houver um único erro a execução do codigo vai parar e o erro será impresso.
+Perceba também que nesse segundo código a um catch para pegar os erros. Isso significa que, da maneira que esse código foi feito, se houver um único erro a execução do código vai parar e o erro será impresso.
 
-O que define se o código deve ou não parar em promessas são os dois parametros passados na promessa. O resolve e o reject do exemplo.
+O que define se o código deve ou não parar em promessas são os dois parâmetros passados na promessa. O resolve e o reject do exemplo.
 
 Portanto caso eu desejasse que o programa continuasse mesmo após se deparar com um arquivo inexistente, eu poderia trocar o reject por um resolve.
 
