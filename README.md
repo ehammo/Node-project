@@ -142,33 +142,32 @@ Segue um exemplo de callback-hell
 
 
 ```
-fs.readdir(source, function (err, files) {
-  if (err) {
-    console.log('Error finding files: ' + err)
-  } else {
-    files.forEach(function (filename, fileIndex) {
-      console.log(filename)
-      gm(source + filename).size(function (err, values) {
-        if (err) {
-          console.log('Error identifying file size: ' + err)
-        } else {
-          console.log(filename + ' : ' + values)
-          aspect = (values.width / values.height)
-          widths.forEach(function (width, widthIndex) {
-            height = Math.round(width / aspect)
-            console.log('resizing ' + filename + 'to ' + height + 'x' + height)
-            this.resize(width, height).write(dest + 'w' + width + '_' + filename, function(err) {
-              if (err) console.log('Error writing file: ' + err)
-            })
-          }.bind(this))
+function readFiles(file, file2, file3){
+  fs.readFile(file, 'utf-8', (err, data) => {
+    if (err) {
+      console.log(err.toString())
+      return (err)
+    }
+    console.log(data)
+    fs.readFile(file2, 'utf-8', (err2, data2) => {
+      if (err2) {
+        console.log(err2.toString())
+        return (err2)
+      }
+      console.log(data2)
+      fs.readFile(file3, 'utf-8', (err3, data3) => {
+        if (err3) {
+          console.log(err3.toString())
+          return (err3)
         }
+        console.log(data3)
       })
     })
-  }
-})
+  })
+}
 ```
 
-Um bom indicativo são as linhas 162-166 uma pirâmide de chaves e parênteses.
+Um bom indicativo são as 4 últimas linhas de código: uma pirâmide de chaves e parênteses.
 
 Agora um exemplo usando promessas:
 
@@ -188,16 +187,16 @@ function read (file) {
 
 Promise.all([
     read('file.txt'),
-    read('file2.txt')
+    read('file2.txt'),
+    read('file3.txt')
 ])
 .then((data) => console.log(data))
 .catch((err) => console.log(err))
 ```
 
-O de promessas é bem mais limpo e mais fácil de acompanhar. Não necessariamente tem a mesma funcionalidade que o outro código, já que no exemplo anterior nós estávamos lendo um diretório qao invés de arquivos separados.
+Mesma funcionalidade com mais clareza, esse código é bem mais limpo e mais fácil de acompanhar.
 
-
-Neste último exemplo estamos lendo vários arquivos. A função de leitura de um arquivo foi encapsulada em uma promessa. Dessa forma posso executar múltiplas promessas, uma seguida da outra e encapsular todas as respostas em um único objeto.
+Nestes códigos o objetivo é a leitura de vários arquivos. A função de leitura de um arquivo foi encapsulada em uma promessa. Dessa forma posso executar múltiplas promessas, uma seguida da outra e encapsular todas as respostas em um único objeto.
 
 ![promessa1](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/promessa1.PNG)
 
