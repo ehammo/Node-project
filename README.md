@@ -133,6 +133,91 @@ Do nosso ponto de vista, como desenvolvedores, node tem apenas uma thread. Toda 
 
 ## Fluxo de controle e promessas
 
+Para os que já conhecem mais Javascript podem estar com medo do famoso Callback-hell. Callback-ehll é o que acontece quando as pessoass que programavam em C, ruby ou python começam a codar em javascript pela primeira vez. Essas pessoas normalmente cometem esse erro, de tentar montar a execução do código visualmente de cima para baixo, já que nas outras linguagens citadas o que ocorre na linha 1 vai terminar antes da linha 2. Para resolver esse problema podemos usar promessas (Ainda tem como fazer besteira mesmo usando promessas então cuidado)
+
+
+Segue um exemplo de callback-hell
+
+
+```
+fs.readdir(source, function (err, files) {
+  if (err) {
+    console.log('Error finding files: ' + err)
+  } else {
+    files.forEach(function (filename, fileIndex) {
+      console.log(filename)
+      gm(source + filename).size(function (err, values) {
+        if (err) {
+          console.log('Error identifying file size: ' + err)
+        } else {
+          console.log(filename + ' : ' + values)
+          aspect = (values.width / values.height)
+          widths.forEach(function (width, widthIndex) {
+            height = Math.round(width / aspect)
+            console.log('resizing ' + filename + 'to ' + height + 'x' + height)
+            this.resize(width, height).write(dest + 'w' + width + '_' + filename, function(err) {
+              if (err) console.log('Error writing file: ' + err)
+            })
+          }.bind(this))
+        }
+      })
+    })
+  }
+})
+```
+
+Um bom indicativo são as linhas 162-166 uma piramide de chaves parênteses. Não necessariamente com a mesma funcionalidade, já que o exemplo anterior nos estavamos lendo um diretório, mas segue um exemplo de código usando promessas.
+
+
+```
+const fs = require('fs')
+
+function read (file) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, 'utf-8', (err, data) => {
+      if (err) {
+        return reject (err)
+      }
+      resolve(data)
+    })
+  })
+}
+
+Promise.all([
+    read('file.txt'),
+    read('file2.txt')
+])
+.then((data) => console.log(data))
+.catch((err) => console.log(err))
+```
+Neste exemplo estamos lendo varios arquivos. A função de leitura de um arquivo foi encapsulada em uma promessa. Dessa forma posso executar multiplas promessas, uma seguida da outra e encapsular todas as respostas em um único objeto.
+
+![promessa1](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/promessa1.PNG)
+
+Perceba também que nesse segundo código a um catch para pegar os erros. Isso significa que, da maneira que esse código foi feito, se houver um único erro a execução do codigo vai parar e o erro será impresso.
+
+O que define se o código deve ou não parar em promessas são os dois parametros passados na promessa. O resolve e o reject do exemplo.
+
+Portanto caso eu desejasse que o programa continuasse mesmo após se deparar com um arquivo inexistente, eu poderia trocar o reject por um resolve.
+
+Minha promessa ficaria assim:
+
+```
+function read (file) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, 'utf-8', (err, data) => {
+      if (err) {
+        return resolve (err.toString())
+      }
+      resolve(data)
+    })
+  })
+}
+```
+
+Dessa forma o erro seria encapsulado como uma resposta positiva, obtendo esse resultado:
+
+![promessa2](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/promessa2.PNG)
 
 # Seu primeiro servidor HTTP usando Node
 
