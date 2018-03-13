@@ -126,14 +126,16 @@ O loop de evento é responsável por operações síncronas.
 Vamos só relembrar programação baseada em eventos:
 
 ```
-Programação baseada em eventos é um paradigma computacional em que o fluxo do programa é determinado por eventos como ações de usuário (pressionar teclas, clicar com o mouse), saidas de sensores, mensagens de outros programas, de outras threads, etc.
+Programação baseada em eventos é um paradigma computacional em que o fluxo do programa é
+determinado por eventos como ações de usuário (pressionar teclas, clicar com o mouse), saidas de
+sensores, mensagens de outros programas, de outras threads, etc.
 ```
 
 Do nosso ponto de vista, como desenvolvedores, node tem apenas uma thread. Toda a complexidade de multithreading é abstraída usando a **Magia do Node**.
 
 ## Fluxo de controle e promessas
 
-Para os que já conhecem mais Javascript podem estar com medo do famoso Callback-hell. Callback-ehll é o que acontece quando as pessoass que programavam em C, ruby ou python começam a codar em javascript pela primeira vez. Essas pessoas normalmente cometem esse erro, de tentar montar a execução do código visualmente de cima para baixo, já que nas outras linguagens citadas o que ocorre na linha 1 vai terminar antes da linha 2. Para resolver esse problema podemos usar promessas (Ainda tem como fazer besteira mesmo usando promessas então cuidado)
+Para os que já conhecem mais Javascript podem estar com medo do famoso Callback-hell. Callback-hell é o que acontece quando as pessoass que programavam em C, ruby ou python começam a codar em javascript pela primeira vez. Essas pessoas normalmente cometem esse erro, de tentar montar a execução do código visualmente de cima para baixo, já que nas outras linguagens citadas o que ocorre na linha 1 vai terminar antes da linha 2. Para resolver esse problema podemos usar promessas (Ainda tem como fazer besteira mesmo usando promessas então cuidado)
 
 
 Segue um exemplo de callback-hell
@@ -166,8 +168,9 @@ fs.readdir(source, function (err, files) {
 })
 ```
 
-Um bom indicativo são as linhas 162-166 uma pirâmide de chaves parênteses. Não necessariamente com a mesma funcionalidade, já que o exemplo anterior nos estávamos lendo um diretório, mas segue um exemplo de código usando promessas.
+Um bom indicativo são as linhas 162-166 uma pirâmide de chaves e parênteses.
 
+Agora um exemplo usando promessas:
 
 ```
 const fs = require('fs')
@@ -190,13 +193,17 @@ Promise.all([
 .then((data) => console.log(data))
 .catch((err) => console.log(err))
 ```
-Neste exemplo estamos lendo vários arquivos. A função de leitura de um arquivo foi encapsulada em uma promessa. Dessa forma posso executar múltiplas promessas, uma seguida da outra e encapsular todas as respostas em um único objeto.
+
+O de promessas é bem mais limpo e mais fácil de acompanhar. Não necessariamente tem a mesma funcionalidade que o outro código, já que no exemplo anterior nós estávamos lendo um diretório qao invés de arquivos separados.
+
+
+Neste último exemplo estamos lendo vários arquivos. A função de leitura de um arquivo foi encapsulada em uma promessa. Dessa forma posso executar múltiplas promessas, uma seguida da outra e encapsular todas as respostas em um único objeto.
 
 ![promessa1](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/promessa1.PNG)
 
 Perceba também que nesse segundo código a um catch para pegar os erros. Isso significa que, da maneira que esse código foi feito, se houver um único erro a execução do código vai parar e o erro será impresso.
 
-O que define se o código deve ou não parar em promessas são os dois parâmetros passados na promessa. O resolve e o reject do exemplo.
+ Em promessas o que define se o código deve ou não parar, se ele deve ou não lançar um exceção são os dois parâmetros: O resolve e o reject do exemplo.
 
 Portanto caso eu desejasse que o programa continuasse mesmo após se deparar com um arquivo inexistente, eu poderia trocar o reject por um resolve.
 
