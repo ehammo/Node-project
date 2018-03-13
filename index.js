@@ -13,8 +13,9 @@ function read (file) {
 
 Promise.all([
     read('file.txt'),
+    read('file2.txt'),
     read('file3.txt'),
-    read('file2.txt')    
+    read('arquivoInexistente.txt')    
 ])
 .then((data) => console.log(data))
 .catch((err) => console.log(err))
