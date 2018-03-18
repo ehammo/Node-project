@@ -41,6 +41,8 @@ Note que eu chamei meu 'main' de index.js, e é por este motivo que meu start é
 
 Abra o terminal e rode a código: ```npm install express --save``` Agora abra o seu package json. Perceba que ele agora tem o nó de dependências que inclui o express.
 
+Isso como já explicado antes serve para auxiliar seu colega de trabalho para instalar as dependencias do app de maneira mais fácil. Rodando ````npm install``` o npm instalará todas as dependencias que o package.json contém.
+
 ## Criando o index.js
 
 Vamos criar nosso Main. O index.js vai ser o seu arquivo principal, mas ele não deve ser um arquivo grande. Você deve apenas inicializar outros componentes nele, apenas isso.
@@ -226,6 +228,47 @@ Dessa forma o erro seria encapsulado como uma resposta positiva, obtendo esse re
 ![promessa2](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/promessa2.PNG)
 
 # Seu primeiro servidor HTTP usando Node
+
+Node possui modulos como http-module e https-module que servem para setar conexões HTTP, enviar e receber dados. E nessa parte do tutorial eu poderia ensinar a usar esses modulos, porém como temos algo melhor, com mais funcionalidades e mais fácil de aprender acho melhor focar nisso. Estou do falando do **ExpressJS**. Express pode ser chamado de modulo ou de framework, já que possui submodulos, api, metodologia, convenções assim como um framework. No final das contas express é uma biblioteca que amarra todos os componentes necessários para criar um webserver funcional, moderno, com todas as conveniencias necessárias para isso tais como: Hospedagem de arquivos estaticos, POST parsing, cookie parsing, CORS, muito mais funcionalidades do que veremos aqui. Para quem tem curiosidade e quer estudar mais afundo, esteja a vontade nesse [link](http://expressjs.com)
+
+Se você pulou passos desse tutorial talvez não tenha o express instalado ainda. Para instala-lo rode ````npm install express --save``` 
+
+Tendo instalado o express podemos começar a montar nosso servidor!
+
+````
+var express = require('express'); //importa o express
+var app = express(); //cria um router
+var port = 3000 //define a porta
+
+/*
+define que se o cliente der um get no servidor,
+respondemos com a string 'Hello from Express!'
+*/
+app.get('/', (request, response) => {
+  response.send('Hello from Express!')
+})
+
+/*
+define a porta que o servidor deve escutar
+*/
+app.listen(port, ()=>{
+  console.log(`Server running on port: ${port}`)
+})
+```
+
+Rodando o servidor agora com ```npm start```
+
+Se acessarmos o nosso [servidor](localhost:3000/) podemos ver a string 'Hello from Express'
+
+Agora vamos para a parte complicada de Express. Express usa o conceitos de middleware para lidar com os pedidos e respostas de seu servidor. 
+
+![middlewares](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/middlewares.PNG)
+
+No exemplo anterior não usamos middleware algum, indo direto para o roteamento. Com app.use podemos definir os middlewares. app.use recebe até 3 parametros: um request, um response e um callback. Na maior parte dos exemplos que irei mostrar aqui usaremos o app.use passando apenas o callback, ou seja apenas uma função. Os middlewares servem para pre-processar informações antes delas chegarem nas rotas. Um bom exemplo disso é o submodulo de express chamado body-parser;
+
+
+
+
 
 # Banco de dados em Node
 
