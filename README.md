@@ -235,7 +235,7 @@ Se você pulou passos desse tutorial talvez não tenha o express instalado ainda
 
 Tendo instalado o express podemos começar a montar nosso servidor!
 
-````
+```
 var express = require('express'); //importa o express
 var app = express(); //cria um router
 var port = 3000 //define a porta
@@ -264,7 +264,9 @@ Agora vamos para a parte complicada de Express. Express usa o conceitos de middl
 
 ![middlewares](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/middlewares.PNG)
 
-No exemplo anterior não usamos middleware algum, indo direto para o roteamento. Com app.use podemos definir os middlewares. app.use recebe até 3 parametros: um request, um response e um callback. Na maior parte dos exemplos que irei mostrar aqui usaremos o app.use passando apenas o callback, ou seja apenas uma função. Os middlewares servem para pre-processar informações antes delas chegarem nas rotas. Um bom exemplo disso é o submodulo de express chamado body-parser;
+No exemplo anterior não usamos middleware algum, indo direto para o roteamento. Com app.use podemos definir os middlewares, e ele recebe até 3 parametros: um request, um response e um callback. Na maior parte dos exemplos que irei mostrar aqui usaremos o app.use passando apenas o callback, ou seja apenas uma função.
+
+Os middlewares servem para pre-processar informações antes delas chegarem nas rotas. Um bom exemplo disso é o submodulo de express chamado body-parser.
 
 
 
