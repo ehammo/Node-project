@@ -5,12 +5,24 @@ var bodyParser = require('body-parser'); // pull information from HTML POST (exp
 //var morgan = require('morgan'); // log requests to the console (express4)
 //var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
+//middlewares
+app.use(bodyParser.json()); // parse application/json
+
 /*
 define que se o cliente der um get no servidor,
 respondemos com a string 'Hello from Express!'
 */
+
+var string = 'Hello from Express!';
 app.get('/', (request, response) => {
-  response.send('Hello from Express!')
+  response.send(string)
+})
+
+app.put('/', (request, response) => {
+  if(request.body != null){
+    string = request.body.string;
+  }
+  response.send(string)
 })
 
 /*

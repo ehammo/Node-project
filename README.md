@@ -2,6 +2,10 @@
 
 Este projeto serve para ilustrar melhores práticas usando node, bem como explicar em formato de tutorial como usar Node.js
 
+## Observações
+
+Vale resaltar que as vezes eu misturo inglês com português, usando request ao invés de pedido, I/O ao invés de E/S (input output, entrada e saída), caso em algum caso tenha ficado estranho, confuso sinta-se a vontade para me criticar e pedir para eu arrumar!
+
 # Começando a usar Node.js
 
 O que é Node.js? Node.js (Eu só vou ficar chamando Node.js de Node bear with me ok?) Node é um framework de desenvolvimento Javascript para back-end. Ou seja uma paradinha que usamos para desenvolver servidores de aplicações WEB. Node é eficiente, leve e é baseado em **EVENTOS**, além disso ele usa libuv, uma biblioteca com foco em I/O assíncrono. Essas últimas duas informações são importantes, pois a programação em Node é em sua maioria assíncrona e caso você não esteja familiarizado com esse tipo de programação, você pode ter um pouco de dificuldade.
@@ -36,6 +40,8 @@ Para criar um template do package.json apenas digite npm init no terminal, na pa
 ![package_image](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/packageJsonScripts.PNG)
 
 Note que eu chamei meu 'main' de index.js, e é por este motivo que meu start é node index.js. Esses scripts só servem para facilitar a vida do desenvolvedor na hora de rodar as aplicações. Ao invés de digitar um comando enorme você pode encurta-lo com esses scripts. Alguns de vocês fazem isso em Django usando Gulp.
+
+Para executar esses scripts digite ```npm run [script]```
 
 ## Testando o NPM
 
@@ -231,7 +237,7 @@ Dessa forma o erro seria encapsulado como uma resposta positiva, obtendo esse re
 
 Node possui modulos como http-module e https-module que servem para setar conexões HTTP, enviar e receber dados. E nessa parte do tutorial eu poderia ensinar a usar esses modulos, porém como temos algo melhor, com mais funcionalidades e mais fácil de aprender acho melhor focar nisso. Estou do falando do **ExpressJS**. Express pode ser chamado de modulo ou de framework, já que possui submodulos, api, metodologia, convenções assim como um framework. No final das contas express é uma biblioteca que amarra todos os componentes necessários para criar um webserver funcional, moderno, com todas as conveniencias necessárias para isso tais como: Hospedagem de arquivos estaticos, POST parsing, cookie parsing, CORS, muito mais funcionalidades do que veremos aqui. Para quem tem curiosidade e quer estudar mais afundo, esteja a vontade nesse [link](http://expressjs.com)
 
-Se você pulou passos desse tutorial talvez não tenha o express instalado ainda. Para instala-lo rode ````npm install express --save``` 
+Se você pulou passos desse tutorial talvez não tenha o express instalado ainda. Para instala-lo rode ```npm install express --save``` 
 
 Tendo instalado o express podemos começar a montar nosso servidor!
 
@@ -260,14 +266,50 @@ Rodando o servidor agora com ```npm start```
 
 Se acessarmos o nosso [servidor](localhost:3000/) podemos ver a string 'Hello from Express'
 
-Agora vamos para a parte complicada de Express. Express usa o conceitos de middleware para lidar com os pedidos e respostas de seu servidor. 
+Dentro do mundo de backend, webserver são programados usando varios tipos de arquiteturas, linguagens e protocolos. Apesar de para esse tutorial, e pro CITi, o foco seja arquitetura REST outra muito famosa é a SOAP. Nesse link detalha o uso dos dois: [link](https://stackify.com/soap-vs-rest/)
+
+Tendo isso em vista, a principal regra de arquiteturas REST é que as aplicações web devem usar o protocolo HTTP como ele foi envisionado. Ou seja, GETs devem apenas adquirir informações, PUTs devem modifica-las, POSTs devem cria-las, DELETEs devem deleta-las. E para os hipsters que usam PATCH, PATCH é tipo um PUT, mas se usa PATCH quando você sabe que foi modificado apenas parte do objeto enquanto PUT se usa quando você não sabe o que o cliente modificou ou quando o cliente modificou tudo. Mas no fim se você usar PUT para toda modificação não tem bronca.
+
+Agora vamos tentar modificar a string que devolvemos nesse GET. Se é modificação então o verbo é PUT
+
+```
+var string = 'Hello from Express!';
+app.get('/', (request, response) => {
+  response.send(string)
+})
+
+app.put('/', (request, response) => {
+  if(request.body != null){
+    string = request.body.string;
+  }
+  response.send(string)
+})
+```
+
+Ficando com o codigo assim, podemos testar usando o [postman](https://www.getpostman.com).
+
+Depois do teste talvez você tenha percebido que a string não esta mudando. Isso se deve ao fato que o request.body está vindo Nulo, não modificando a variavel.
+
+Isso se deve ao fato que antes de chegar no roteador o request deve ser tratado, devemos informar que tipos de requests aceitamos. Para descobrir como fazer isso temos que explorar um pouco mais o express.
+
+Vamos então para a parte complicada de Express. Express usa o conceitos de middleware para lidar com os pedidos e respostas de seu servidor. 
 
 ![middlewares](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/middlewares.PNG)
 
 No exemplo anterior não usamos middleware algum, indo direto para o roteamento. Com app.use podemos definir os middlewares, e ele recebe até 3 parametros: um request, um response e um callback. Na maior parte dos exemplos que irei mostrar aqui usaremos o app.use passando apenas o callback, ou seja apenas uma função.
 
-Os middlewares servem para pre-processar informações antes delas chegarem nas rotas. Um bom exemplo disso é o submodulo de express chamado body-parser.
+Os middlewares servem para pre-processar informações antes delas chegarem nas rotas. Um bom exemplo disso é o submodulo de express chamado [body-parser](https://github.com/expressjs/body-parser).
 
+O body-parser é um middleware que lê as informações enviadas no request e verifica se elas seguem um determinado padrão. Você pode usar esse middleware mais de uma vez caso deseje que seu webserver possa receber mais de um padrão. Era o middleware que estavamos precisando para nosso PUT começar a funcionar!
+
+Acrescentando essa linha no nosso servidor, limitamos o recebimento de requests que sigam o padrão json.
+```app.use(bodyParser.json()); // parse application/json```
+
+No postman:
+
+![put](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/put.PNG)
+
+Podemos perceber que usando o metodo escolhido, json, podemos agora modificar o texto do servidor.
 
 
 
