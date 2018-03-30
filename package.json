@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/CITi-UFPE/Node-project/issues"
   },
-  "homepage": "https://github.com/CITi-UFPE/Node-project#readme",
+  "homepage": "server-citiproject.wedeploy.io",
   "dependencies": {
     "express": "^4.16.2"
   }
