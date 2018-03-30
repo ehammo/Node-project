@@ -4,11 +4,11 @@ Este projeto serve para ilustrar melhores práticas usando node, bem como explic
 
 ## Observações
 
-Vale resaltar que as vezes eu misturo inglês com português, usando request ao invés de pedido, I/O ao invés de E/S (input output, entrada e saída), caso em algum caso tenha ficado estranho, confuso sinta-se a vontade para me criticar e pedir para eu arrumar!
+Vale resaltar que as vezes eu misturo inglês com português, usando request ao invés de pedido, I/O ao invés de E/S (input output, entrada e saída), caso em algum caso tenha ficado estranho ou confuso, sinta-se a vontade para me criticar e exigir uma modificação!
 
 # Começando a usar Node.js
 
-O que é Node.js? Node.js (Eu só vou ficar chamando Node.js de Node bear with me ok?) Node é um framework de desenvolvimento Javascript para back-end. Ou seja uma paradinha que usamos para desenvolver servidores de aplicações WEB. Node é eficiente, leve e é baseado em **EVENTOS**, além disso ele usa libuv, uma biblioteca com foco em I/O assíncrono. Essas últimas duas informações são importantes, pois a programação em Node é em sua maioria assíncrona e caso você não esteja familiarizado com esse tipo de programação, você pode ter um pouco de dificuldade.
+O que é Node.js? Para facilitar a escrita me referenciarei a Node.js como Node de agora em diante. Node é um framework de desenvolvimento Javascript para back-end. Ou seja uma paradinha que usamos para desenvolver servidores de aplicações WEB. Node é eficiente, leve e é baseado em **EVENTOS**, além disso ele usa libuv, uma biblioteca com foco em I/O assíncrono. Essas últimas duas informações são importantes, pois a programação em Node é em sua maioria assíncrona e caso você não esteja familiarizado com esse tipo de programação, você pode ter um pouco de dificuldade.
 
 ## Instalando Node
 
@@ -23,9 +23,11 @@ Agora como eu uso?
 
 Bem similar ao pip, você pode instalar bibliotecas com o comando ```npm install nome_da_biblioteca``` e pode instalar globalmente usando a opção -g após o comando install: ```npm install -g biblioteca_Global```, neste caso a biblioteca fica armazenada em seu computador e não em uma pasta do projeto. Bibliotecas globais podem ser usadas por qualquer projeto a qualquer momento.
 
-Sempre lembrando de acrescentar a pasta node_modules no seu .gitignore, que contém todas as bibliotecas instaladas. Caso contrário seu projeto fica carregado de dados que poderiam ser re-adquiridos pela internet.
+Um bom exemplo de uma biblioteca que deve ser instalada globalmente é o nodemon, utilizada para reiniciar o servidor sempre que há mudança no código. Deve ser instalada globalmente para poder funcionar no seu terminal fora dos scripts contidos no **package.json** falaremos dele logo adiante.
 
-Mas como seus colegas de trabalho vão saber que você instalou uma nova dependência? A maneira mais simples é usar a opção --save do NPM. Que automaticamente salva a dependência no seu package json.
+Outro lembrete importante é acrescentar a pasta node_modules no seu .gitignore, que contém todas as bibliotecas instaladas. Caso contrário seu projeto fica carregado de dados que poderiam ser re-adquiridos pela internet.
+
+Mas como seus colegas de trabalho vão saber que você instalou uma nova dependência? A maneira mais simples é usar a opção --save do NPM. Que automaticamente salva a dependência no seu **package.json**.
 
 ## Criando o Package.json
 
@@ -47,7 +49,7 @@ Para executar esses scripts digite ```npm run [script]```
 
 Abra o terminal e rode a código: ```npm install express --save``` Agora abra o seu package json. Perceba que ele agora tem o nó de dependências que inclui o express.
 
-Isso como já explicado antes serve para auxiliar seu colega de trabalho para instalar as dependencias do app de maneira mais fácil. Rodando ````npm install``` o npm instalará todas as dependencias que o package.json contém.
+Isso como já explicado antes serve para auxiliar seu colega de trabalho para instalar as dependencias do app de maneira mais fácil. Rodando ```npm install``` o npm instalará todas as dependencias que o package.json contém.
 
 ## Criando o index.js
 
@@ -268,7 +270,7 @@ Se acessarmos o nosso [servidor](localhost:3000/) podemos ver a string 'Hello fr
 
 Dentro do mundo de backend, webserver são programados usando varios tipos de arquiteturas, linguagens e protocolos. Apesar de para esse tutorial, e pro CITi, o foco seja arquitetura REST outra muito famosa é a SOAP. Nesse link detalha o uso dos dois: [link](https://stackify.com/soap-vs-rest/)
 
-Tendo isso em vista, a principal regra de arquiteturas REST é que as aplicações web devem usar o protocolo HTTP como ele foi envisionado. Ou seja, GETs devem apenas adquirir informações, PUTs devem modifica-las, POSTs devem cria-las, DELETEs devem deleta-las. E para os hipsters que usam PATCH, PATCH é tipo um PUT, mas se usa PATCH quando você sabe que foi modificado apenas parte do objeto enquanto PUT se usa quando você não sabe o que o cliente modificou ou quando o cliente modificou tudo. Mas no fim se você usar PUT para toda modificação não tem bronca.
+Tendo isso em vista, a principal regra de arquiteturas REST é que as aplicações web devem usar o protocolo HTTP como ele foi envisionado. Ou seja, GETs devem apenas adquirir informações, PUTs devem modifica-las, POSTs devem cria-las, DELETEs devem deleta-las. E para os hipsters que usam PATCH, PATCH é tipo um PUT, mas se usa PATCH quando você sabe que foi modificado apenas parte do objeto, portanto você cliente, você front-end, envia apenas o que foi modificado. Enquanto PUT se usa quando você não sabe o que o cliente modificou ou quando o cliente modificou tudo, enviando o objeto inteiro. Mas no fim se você usar PUT para toda modificação não tem bronca.
 
 Agora vamos tentar modificar a string que devolvemos nesse GET. Se é modificação então o verbo é PUT
 
@@ -288,7 +290,7 @@ app.put('/', (request, response) => {
 
 Ficando com o codigo assim, podemos testar usando o [postman](https://www.getpostman.com).
 
-Depois do teste talvez você tenha percebido que a string não esta mudando. Isso se deve ao fato que o request.body está vindo Nulo, não modificando a variavel.
+Depois do teste talvez você tenha percebido que a string não esta mudando. Isso se deve ao fato que o request.body está vindo Nulo, não modificando a variável.
 
 Isso se deve ao fato que antes de chegar no roteador o request deve ser tratado, devemos informar que tipos de requests aceitamos. Para descobrir como fazer isso temos que explorar um pouco mais o express.
 
