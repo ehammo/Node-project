@@ -4,7 +4,13 @@ Este projeto serve para explicar em formato de tutorial como usar Node.js, bem c
 
 ## Observações
 
+### Inglês-Português
+
 Vale resaltar que as vezes eu misturo inglês com português, usando request ao invés de pedido, I/O ao invés de E/S (input output, entrada e saída), caso em algum caso tenha ficado estranho ou confuso, sinta-se a vontade para me criticar e exigir uma modificação!
+
+### Front-end
+
+Em Node existem diversas formas de fazer o front-end, renderizando HTML e CSS. Eu constumava usar o [espress-handlebars](https://www.npmjs.com/package/express-handlebars), ou conectar o Node com outro framework para desenvolvimento front-end como o Angular, React, dentre outros. Nesse tutorial vamos focar como montar um webserver, sem front end.
 
 ## Começando a usar Node.js
 
@@ -73,8 +79,21 @@ Lint: Ferramenta de desenvolvimento que analisa erros no seu código e/ou proble
 
 Para javascript o ideal seria usar o ESLint. Para isso use o npm com o seguinte comando ```npm install -g eslint```
 
+Em seguinda instale as dependencias
 
-Após instalar o ESLint é necessário informar ao seu editor de texto que estas usando o eslint. [Um tutorial para varios editores](https://developer.ibm.com/node/2016/07/27/auto-fixing-formatting-your-javascript-with-eslint/)
+```javascript
+
+npm install -g eslint-config-standard
+npm install -g eslint-plugin-import
+npm install -g eslint-plugin-node
+npm install -g eslint-plugin-promise
+npm install -g eslint-plugin-standard
+
+```
+
+Se voce instalar o ESLint localmente você não precisa seguir esses passos já que essas dependencias serão instaladas sozinhas, porém para todo projeto será necessário instalar o ESLint.
+
+Após instalar o ESLint e suas dependencias é necessário informar ao seu editor de texto que você esta usando o eslint. [Um tutorial para varios editores](https://developer.ibm.com/node/2016/07/27/auto-fixing-formatting-your-javascript-with-eslint/)
 
 Mas eu uso o VisualStudio Code. Para o Visual Studio Code basta instalar a extensão ESLint.
 
@@ -88,19 +107,7 @@ Depois de extensão instalada basta rodar ```eslint --init``` e responder as per
 
 ```
 
-Depois disso ainda temos mais um passo. Eu sei que tá massante mas instlando globalmente como estamos fazendo significa que pros próximos projetos só vamos precisar dar o eslint init.
-
-```javascript
-
-npm install -g eslint-config-standard
-npm install -g eslint-plugin-import
-npm install -g eslint-plugin-node
-npm install -g eslint-plugin-promise
-npm install -g eslint-plugin-standard
-
-```
-
-
+Depois disso ainda temos mais um passo. Tudo já vai estar rodando.
 
 ## Entendendo programação assíncrona
 
@@ -401,7 +408,23 @@ O middleware/função que captura o erro deve ser o **último** a ser adicionado
 
 Outra coisa a se mencionar é o uso de **status**. Eu não cheguei a mencionar antes mas em HTML existe centenas de padrões sobre esses status como por exemplo: 200 significa que ocorreu tudo bem, 404 não foi encontrado e 500 erro interno no servidor. Uma lista desses status se encontra dentro da pasta assets deste projeto.
 
+Quanto os 4 parametros da função, o *err* e o *next* são os mais interessantes para destacar. Em err temos o erro que foi levantado e em next um callback que pode ser usado caso se deseje encadear multiplos erros.
+
+Por exemplo
+
+```javascript
+
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
+
+```
+
+Nesse exemplo, logErrors só escreve o log do erro, clientError verifica se é um erro do cliente, caso seja trata de um modo, caso contrario passa adiante, e então, trata-se como um erro inexperado.
+
 ## Banco de dados em Node
+
+Finalmente, chegamos em banco de dados.
 
 ## We deploy / Heroku
 
