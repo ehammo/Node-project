@@ -1,27 +1,27 @@
-var express = require('express'); //importa o express
-var app = express(); //cria um router
-var port = 3000 //define a porta
-var bodyParser = require('body-parser'); // pull information from HTML POST (express4)
-//var morgan = require('morgan'); // log requests to the console (express4)
-//var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
+var express = require('express') // importa o express
+var app = express() // cria um router
+var port = 3000 // define a porta
+var bodyParser = require('body-parser') // pull information from HTML POST (express4)
+// var morgan = require('morgan'); // log requests to the console (express4)
+// var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
-//middlewares
-app.use(bodyParser.json()); // parse application/json
+// middlewares
+app.use(bodyParser.json()) // parse application/json
 app.use((err, request, response, next) => {
   // log the error, for now just console.log
   console.log(err)
   response.status(500).send('Something broke!')
 })
 
-var string = 'Hello from Express!';
+var string = 'Hello from Express!'
 app.get('/', (request, response) => {
   response.send(string)
   throw new Error('oops')
 })
 
 app.put('/', (request, response) => {
-  if(request.body != null){
-    string = request.body.string;
+  if (request.body != null) {
+    string = request.body.string
   }
   response.send(string)
 })
@@ -29,6 +29,6 @@ app.put('/', (request, response) => {
 /*
 define a porta que o servidor deve escutar
 */
-app.listen(port, ()=>{
+app.listen(port, () => {
   console.log(`Server running on port: ${port}`)
 })

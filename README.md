@@ -6,7 +6,7 @@ Este projeto serve para explicar em formato de tutorial como usar Node.js, bem c
 
 Vale resaltar que as vezes eu misturo inglês com português, usando request ao invés de pedido, I/O ao invés de E/S (input output, entrada e saída), caso em algum caso tenha ficado estranho ou confuso, sinta-se a vontade para me criticar e exigir uma modificação!
 
-# Começando a usar Node.js
+## Começando a usar Node.js
 
 O que é Node.js? Para facilitar a escrita me referenciarei a Node.js como Node de agora em diante. Node é um framework de desenvolvimento Javascript para back-end. Ou seja uma paradinha que usamos para desenvolver servidores de aplicações WEB. Node é eficiente, leve e é baseado em **EVENTOS**, além disso ele usa libuv, uma biblioteca com foco em I/O assíncrono. Essas últimas duas informações são importantes, pois a programação em Node é em sua maioria assíncrona e caso você não esteja familiarizado com esse tipo de programação, você pode ter um pouco de dificuldade.
 
@@ -19,7 +19,7 @@ Baixe node a partir desse [link](https://nodejs.org/en/download/)
 O node utiliza um sistema de gerenciamento de pacotes javascript chamado NPM, ele pode ser encontrado nesse [link](https://npmjs.com)
 Ou seja, para vocês que já estudaram Django, o node usa o NPM como o Django usa o PIP. No final das contas é um programa para você baixar bibliotecas legais para lhe ajudar a montar uma aplicação.
 
-Agora como eu uso? 
+Agora como eu uso?
 
 Bem similar ao pip, você pode instalar bibliotecas com o comando ```npm install nome_da_biblioteca``` e pode instalar globalmente usando a opção -g após o comando install: ```npm install -g biblioteca_Global```, neste caso a biblioteca fica armazenada em seu computador e não em uma pasta do projeto. Bibliotecas globais podem ser usadas por qualquer projeto a qualquer momento.
 
@@ -33,11 +33,11 @@ Mas como seus colegas de trabalho vão saber que você instalou uma nova depend�
 
 O package.json é um arquivo dentro do seu projeto node que vai conter as informações mais importantes sobre seu projeto como: quais as dependências que seu projeto possui com aplicações de terceiros (Bibliotecas que você instalou com NPM por exemplo), scripts para facilitar a execução de comandos, versionamento, nome do autor, e mais!
 
-Esses scripts que acabei de mencionar são cortesia do nosso gerenciador de pacotes o NPM. 
+Esses scripts que acabei de mencionar são cortesia do nosso gerenciador de pacotes o NPM.
 
 Para criar um template do package.json apenas digite npm init no terminal, na pasta do seu projeto. Aperte Enter sempre que terminar de preencher aquele item ou não souber como preenche-lo.
 
-É boa prática adicionar o script "START" no package.json. 
+É boa prática adicionar o script "START" no package.json.
 
 ![package_image](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/packageJsonScripts.PNG)
 
@@ -71,10 +71,38 @@ Nessa altura do campeonato você já ouviu falar em Lint não é? Vou refrescar 
 
 Lint: Ferramenta de desenvolvimento que analisa erros no seu código e/ou problemas com padrões de código de determinadas linguagens
 
-Para javascript o ideal seria usar o ESLint. Para isso instale-o usando o npm com o seguinte comando ```npm install -g eslint```
+Para javascript o ideal seria usar o ESLint. Para isso use o npm com o seguinte comando ```npm install -g eslint```
 
 
-# Entendendo programação assíncrona
+Após instalar o ESLint é necessário informar ao seu editor de texto que estas usando o eslint. [Um tutorial para varios editores](https://developer.ibm.com/node/2016/07/27/auto-fixing-formatting-your-javascript-with-eslint/)
+
+Mas eu uso o VisualStudio Code. Para o Visual Studio Code basta instalar a extensão ESLint.
+
+Depois de extensão instalada basta rodar ```eslint --init``` e responder as perguntas assim:
+
+```r
+
+? How would you like to configure ESLint? Use a popular style guide
+? Which style guide do you want to follow? Standard
+? What format do you want your config file to be in? JSON
+
+```
+
+Depois disso ainda temos mais um passo. Eu sei que tá massante mas instlando globalmente como estamos fazendo significa que pros próximos projetos só vamos precisar dar o eslint init.
+
+```javascript
+
+npm install -g eslint-config-standard
+npm install -g eslint-plugin-import
+npm install -g eslint-plugin-node
+npm install -g eslint-plugin-promise
+npm install -g eslint-plugin-standard
+
+```
+
+
+
+## Entendendo programação assíncrona
 
 Para entender programação assíncrona primeiro vamos dar uma olhada na síncrona. Normalmente quando programamos, a maioria das operações de I/O (entrada e saída) acontecem sincronamente. Porém se você tem várias operações desse tipo, que é o que acontece normalmente em um servidor, nós pudemos ficar com uma fila dessa forma
 
@@ -86,7 +114,8 @@ Agora entrando em programação assíncrona. Em javascript existe um tipo de fun
 
 Digamos que eu tenha o seguinte código, codado usando conceitos de programação síncrona, em node:
 
-```
+```javascript
+
 const fs = require('fs')
 let content
 try {
@@ -95,6 +124,7 @@ try {
   console.log(ex)
 }
 console.log(content)
+
 ```
 
 Perceba que a função readFileSync tem dois possíveis resultados: content, conteúdo do arquivo, ou ex, exceção I/O
@@ -105,9 +135,9 @@ Então se eu passar um callback desse para a função de leitura de arquivo, qua
 
 Nosso código node ficaria assim:
 
-```
-const fs = require('fs')
+```javascript
 
+const fs = require('fs')
 console.log('start reading a file...')
 
 //tente mudar file.md para README.md e você verá o arquivo ao invés do erro
@@ -119,8 +149,8 @@ fs.readFile('file.md', 'utf-8', function (erro, content) {
     return console.log(content)
   }
 })
-
 console.log('end of the file')
+
 ```
 
 Então, caso readFile retorne alguma exceção erro será diferente de nulo, o if sera verdadeiro e será impresso na tela o erro e a string 'error happened during reading the file'. Experimente colocar esse código no seu index.js e rodar com npm start.
@@ -135,10 +165,12 @@ O loop de evento é responsável por operações síncronas.
 
 Vamos só relembrar programação baseada em eventos:
 
-```
+```r
+
 Programação baseada em eventos é um paradigma computacional em que o fluxo do programa é
 determinado por eventos como ações de usuário (pressionar teclas, clicar com o mouse), saidas de
 sensores, mensagens de outros programas, de outras threads, etc.
+
 ```
 
 Do nosso ponto de vista, como desenvolvedores, node tem apenas uma thread. Toda a complexidade de multithreading é abstraída usando a **Magia do Node**.
@@ -151,7 +183,8 @@ Para os que já conhecem mais Javascript podem estar com medo do famoso Callback
 Segue um exemplo de callback-hell
 
 
-```
+```javascript
+
 function readFiles(file, file2, file3){
   fs.readFile(file, 'utf-8', (err, data) => {
     if (err) {
@@ -175,13 +208,15 @@ function readFiles(file, file2, file3){
     })
   })
 }
+
 ```
 
 Um bom indicativo são as 4 últimas linhas de código: uma pirâmide de chaves e parênteses.
 
 Agora um exemplo usando promessas:
 
-```
+```javascript
+
 const fs = require('fs')
 
 function read (file) {
@@ -202,6 +237,7 @@ Promise.all([
 ])
 .then((data) => console.log(data))
 .catch((err) => console.log(err))
+
 ```
 
 Mesma funcionalidade com mais clareza, esse código é bem mais limpo e mais fácil de acompanhar.
@@ -218,7 +254,8 @@ Portanto caso eu desejasse que o programa continuasse mesmo após se deparar com
 
 Minha promessa ficaria assim:
 
-```
+```javascript
+
 function read (file) {
   return new Promise((resolve, reject) => {
     fs.readFile(file, 'utf-8', (err, data) => {
@@ -229,21 +266,23 @@ function read (file) {
     })
   })
 }
+
 ```
 
 Dessa forma o erro seria encapsulado como uma resposta positiva, obtendo esse resultado:
 
 ![promessa2](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/promessa2.PNG)
 
-# Seu primeiro servidor HTTP usando Node
+## Seu primeiro servidor HTTP usando Node
 
 Node possui modulos como http-module e https-module que servem para setar conexões HTTP, enviar e receber dados. E nessa parte do tutorial eu poderia ensinar a usar esses modulos, porém como temos algo melhor, com mais funcionalidades e mais fácil de aprender acho melhor focar nisso. Estou do falando do **ExpressJS**. Express pode ser chamado de modulo ou de framework, já que possui submodulos, api, metodologia, convenções assim como um framework. No final das contas express é uma biblioteca que amarra todos os componentes necessários para criar um webserver funcional, moderno, com todas as conveniencias necessárias para isso tais como: Hospedagem de arquivos estaticos, POST parsing, cookie parsing, CORS, muito mais funcionalidades do que veremos aqui. Para quem tem curiosidade e quer estudar mais afundo, esteja a vontade nesse [link](http://expressjs.com)
 
-Se você pulou passos desse tutorial talvez não tenha o express instalado ainda. Para instala-lo rode ```npm install express --save``` 
+Se você pulou passos desse tutorial talvez não tenha o express instalado ainda. Para instala-lo rode ```npm install express --save```
 
 Tendo instalado o express podemos começar a montar nosso servidor!
 
-```
+```javascript
+
 var express = require('express'); //importa o express
 var app = express(); //cria um router
 var port = 3000 //define a porta
@@ -262,13 +301,14 @@ define a porta que o servidor deve escutar
 app.listen(port, ()=>{
   console.log(`Server running on port: ${port}`)
 })
+
 ```
 
 Rodando o servidor agora com ```npm start```
 
 Se acessarmos o nosso [servidor](localhost:3000/) podemos ver a string 'Hello from Express'
 
-##Entendendo REST
+### Entendendo REST
 
 Dentro do mundo de backend, webserver são programados usando varios tipos de arquiteturas, linguagens e protocolos. Apesar de para esse tutorial, e pro CITi, o foco seja arquitetura REST outra muito famosa é a SOAP. Nesse link detalha o uso dos dois: [link](https://stackify.com/soap-vs-rest/)
 
@@ -276,7 +316,8 @@ Tendo isso em vista, a principal regra de arquiteturas REST é que as aplicaçõ
 
 Agora vamos tentar modificar a string que devolvemos nesse GET. Se é modificação então o verbo é PUT
 
-```
+```javascript
+
 var string = 'Hello from Express!';
 app.get('/', (request, response) => {
   response.send(string)
@@ -288,6 +329,7 @@ app.put('/', (request, response) => {
   }
   response.send(string)
 })
+
 ```
 
 Ficando com o codigo assim, podemos testar usando o [postman](https://www.getpostman.com).
@@ -296,9 +338,9 @@ Depois do teste talvez você tenha percebido que a string não esta mudando. Iss
 
 Isso se deve ao fato que antes de chegar no roteador o request deve ser tratado, devemos informar que tipos de requests aceitamos. Para descobrir como fazer isso temos que explorar um pouco mais o express.
 
-## Os middlewares do express
+### Os middlewares do express
 
-Vamos então para a parte complicada de Express. Express usa o conceitos de middleware para lidar com os pedidos e respostas de seu servidor. 
+Vamos então para a parte complicada de Express. Express usa o conceitos de middleware para lidar com os pedidos e respostas de seu servidor.
 
 ![middlewares](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/middlewares.PNG)
 
@@ -319,7 +361,8 @@ Podemos perceber que usando o metodo escolhido, json, podemos agora modificar o 
 
 Uma coisa importante de levantar é que os middlewares são alocados na ordem que os ```app.use``` estão sendo colocados. Se por exemplo a estrutura do codigo for:
 
-```
+```javascript
+
 var string = 'Hello from Express!';
 app.get('/', (request, response) => {
   response.send(string)
@@ -332,14 +375,17 @@ app.put('/', (request, response) => {
   response.send(string)
 })
 app.use(bodyParser.json()); // parse application/json
+
 ```
+
 Voltariamos a estaca zero, já que nosso servidor processaria o put antes de processar o json.
 
-## Erros
+### Erros
 
 Em toda plataforma de desenvolvimento lidar com erros é essencial. Quando trabalhamos com ExpressJS temos um meio diferente de capturar erros. Um middleware com 4 parametros. Fica algo mais ou menos assim:
 
-```
+```javascript
+
 app.use((err, request, response, next) => {
   console.log(err)
   response.status(500).send('Erro!')
@@ -348,18 +394,19 @@ var string = 'Hello from Express!';
 app.get('/', (request, response) => {
 //  response.send(string)
   throw new Error('oops')
-``` 
+
+```
 
 O middleware/função que captura o erro deve ser o **último** a ser adicionado com app.use, pois caso contrário os erros lançados em roteamento não chegaram a ser tratados e no final o cliente pode acabar vendo o stacktrace do erro, o que não é ideal.
 
 Outra coisa a se mencionar é o uso de **status**. Eu não cheguei a mencionar antes mas em HTML existe centenas de padrões sobre esses status como por exemplo: 200 significa que ocorreu tudo bem, 404 não foi encontrado e 500 erro interno no servidor. Uma lista desses status se encontra dentro da pasta assets deste projeto.
 
-# Banco de dados em Node
+## Banco de dados em Node
 
-# We deploy / Heroku
+## We deploy / Heroku
 
 [wedeploylink](http://server-citiproject.wedeploy.io)
 
-# Node.js request module
+## Node.js request module
 
-# Node.js project structure
+## Node.js project structure
