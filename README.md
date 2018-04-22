@@ -424,7 +424,17 @@ Nesse exemplo, logErrors só escreve o log do erro, clientError verifica se é u
 
 ## Banco de dados em Node
 
-Finalmente, chegamos em banco de dados.
+Finalmente, chegamos em banco de dados. Vocês já devem ter escutado que existem dois tipo principais de banco de dados: SQL e NoSQL.
+
+### SQL
+
+Vamos começar com SQL. SQL é uma linguagem usada para lidar com bancos de dados relacionais. Dependendo do produto que você está usando esses bancos podem mudar um pouco (de Postgres pra mysql por exemplo), porém eles contém os mesmos fundamentos.
+
+A informação é armazenada em tabelas, e cada objeto inserido é representado como uma linha na tabela como uma planilha do Excel.
+
+Dentro de um banco de dados SQL você define esquemas, isto é um esqueleto para a informação que você vai colocar. A montagem desse esquema é chamada de **modelagem de dados**. Nele você define o tipo de cada coluna, os relacionamentos entre as tabelas, dentre outras coisas.
+
+### NoSQL
 
 ## We deploy / Heroku
 
