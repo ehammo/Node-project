@@ -1,0 +1,44 @@
+Protocolo
+
+200 - OK
+201 - criado
+202 - Aceito
+203 - Informação não autoritaria - Nao exatamente correta
+204 - No content
+205 - Reset content
+206 - Partial content
+3xx - Redirect
+300 - multiple choices
+301 - moved permantly
+302 - Found
+303 - See other
+304 - Not modified
+305 - Use proxy
+306 - unused
+307 - Temporary Redirect
+4xx - Client error
+400 - Bad request
+401 - Unauthorized
+402 - Payment Required
+403 - Proibido
+404 - Não encontrado
+405 - Methodo não autorizado
+406 - Não aceitavel
+407 - Proxy authentication Required
+408 - Request timeout
+409 - conflit
+410 - gone
+411 - lenght Required
+412 Precondition failed
+413 Request entity too large
+414 request URI too long
+415 unsupported media type
+416 Requested range not satisfiable
+417 expecttion failed
+5xx servever error
+500 internal server error
+501 - not implemented
+502 bad gateway
+503 service unavailable
+504 gateway timeout
+505 http version not unsupported

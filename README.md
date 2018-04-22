@@ -1,6 +1,6 @@
 # Node-project
 
-Este projeto serve para ilustrar melhores práticas usando node, bem como explicar em formato de tutorial como usar Node.js
+Este projeto serve para explicar em formato de tutorial como usar Node.js, bem como ilustrar as melhores práticas
 
 ## Observações
 
@@ -23,7 +23,7 @@ Agora como eu uso?
 
 Bem similar ao pip, você pode instalar bibliotecas com o comando ```npm install nome_da_biblioteca``` e pode instalar globalmente usando a opção -g após o comando install: ```npm install -g biblioteca_Global```, neste caso a biblioteca fica armazenada em seu computador e não em uma pasta do projeto. Bibliotecas globais podem ser usadas por qualquer projeto a qualquer momento.
 
-Um bom exemplo de uma biblioteca que deve ser instalada globalmente é o nodemon, utilizada para reiniciar o servidor sempre que há mudança no código. Deve ser instalada globalmente para poder funcionar no seu terminal fora dos scripts contidos no **package.json** falaremos dele logo adiante.
+Um bom exemplo de uma biblioteca que deve ser instalada globalmente é o **nodemon**, utilizada para reiniciar o servidor sempre que há mudança no código. Deve ser instalada globalmente para poder funcionar no seu terminal fora dos scripts contidos no **package.json** falaremos dele logo adiante.
 
 Outro lembrete importante é acrescentar a pasta node_modules no seu .gitignore, que contém todas as bibliotecas instaladas. Caso contrário seu projeto fica carregado de dados que poderiam ser re-adquiridos pela internet.
 
@@ -268,6 +268,8 @@ Rodando o servidor agora com ```npm start```
 
 Se acessarmos o nosso [servidor](localhost:3000/) podemos ver a string 'Hello from Express'
 
+##Entendendo REST
+
 Dentro do mundo de backend, webserver são programados usando varios tipos de arquiteturas, linguagens e protocolos. Apesar de para esse tutorial, e pro CITi, o foco seja arquitetura REST outra muito famosa é a SOAP. Nesse link detalha o uso dos dois: [link](https://stackify.com/soap-vs-rest/)
 
 Tendo isso em vista, a principal regra de arquiteturas REST é que as aplicações web devem usar o protocolo HTTP como ele foi envisionado. Ou seja, GETs devem apenas adquirir informações, PUTs devem modifica-las, POSTs devem cria-las, DELETEs devem deleta-las. E para os hipsters que usam PATCH, PATCH é tipo um PUT, mas se usa PATCH quando você sabe que foi modificado apenas parte do objeto, portanto você cliente, você front-end, envia apenas o que foi modificado. Enquanto PUT se usa quando você não sabe o que o cliente modificou ou quando o cliente modificou tudo, enviando o objeto inteiro. Mas no fim se você usar PUT para toda modificação não tem bronca.
@@ -294,6 +296,8 @@ Depois do teste talvez você tenha percebido que a string não esta mudando. Iss
 
 Isso se deve ao fato que antes de chegar no roteador o request deve ser tratado, devemos informar que tipos de requests aceitamos. Para descobrir como fazer isso temos que explorar um pouco mais o express.
 
+## Os middlewares do express
+
 Vamos então para a parte complicada de Express. Express usa o conceitos de middleware para lidar com os pedidos e respostas de seu servidor. 
 
 ![middlewares](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/middlewares.PNG)
@@ -313,6 +317,42 @@ No postman:
 
 Podemos perceber que usando o metodo escolhido, json, podemos agora modificar o texto do servidor.
 
+Uma coisa importante de levantar é que os middlewares são alocados na ordem que os ```app.use``` estão sendo colocados. Se por exemplo a estrutura do codigo for:
+
+```
+var string = 'Hello from Express!';
+app.get('/', (request, response) => {
+  response.send(string)
+})
+
+app.put('/', (request, response) => {
+  if(request.body != null){
+    string = request.body.string;
+  }
+  response.send(string)
+})
+app.use(bodyParser.json()); // parse application/json
+```
+Voltariamos a estaca zero, já que nosso servidor processaria o put antes de processar o json.
+
+## Erros
+
+Em toda plataforma de desenvolvimento lidar com erros é essencial. Quando trabalhamos com ExpressJS temos um meio diferente de capturar erros. Um middleware com 4 parametros. Fica algo mais ou menos assim:
+
+```
+app.use((err, request, response, next) => {
+  console.log(err)
+  response.status(500).send('Erro!')
+})
+var string = 'Hello from Express!';
+app.get('/', (request, response) => {
+//  response.send(string)
+  throw new Error('oops')
+``` 
+
+O middleware/função que captura o erro deve ser o **último** a ser adicionado com app.use, pois caso contrário os erros lançados em roteamento não chegaram a ser tratados e no final o cliente pode acabar vendo o stacktrace do erro, o que não é ideal.
+
+Outra coisa a se mencionar é o uso de **status**. Eu não cheguei a mencionar antes mas em HTML existe centenas de padrões sobre esses status como por exemplo: 200 significa que ocorreu tudo bem, 404 não foi encontrado e 500 erro interno no servidor. Uma lista desses status se encontra dentro da pasta assets deste projeto.
 
 # Banco de dados em Node
 

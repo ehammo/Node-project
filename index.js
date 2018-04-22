@@ -7,15 +7,16 @@ var bodyParser = require('body-parser'); // pull information from HTML POST (exp
 
 //middlewares
 app.use(bodyParser.json()); // parse application/json
-
-/*
-define que se o cliente der um get no servidor,
-respondemos com a string 'Hello from Express!'
-*/
+app.use((err, request, response, next) => {
+  // log the error, for now just console.log
+  console.log(err)
+  response.status(500).send('Something broke!')
+})
 
 var string = 'Hello from Express!';
 app.get('/', (request, response) => {
   response.send(string)
+  throw new Error('oops')
 })
 
 app.put('/', (request, response) => {
