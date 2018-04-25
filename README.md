@@ -253,7 +253,7 @@ Nestes códigos o objetivo é a leitura de vários arquivos. A função de leitu
 
 ![promessa1](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/promessa1.PNG)
 
-Perceba também que nesse segundo código a um catch para pegar os erros. Isso significa que, da maneira que esse código foi feito, se houver um único erro a execução do código vai parar e o erro será impresso.
+Perceba também que nesse segundo código há um catch para pegar os erros. Isso significa que, da maneira que esse código foi feito, se houver um único erro a execução do código vai parar e o erro será impresso.
 
  Em promessas o que define se o código deve ou não parar, se ele deve ou não lançar um exceção são os dois parâmetros: O resolve e o reject do exemplo.
 
@@ -279,6 +279,10 @@ function read (file) {
 Dessa forma o erro seria encapsulado como uma resposta positiva, obtendo esse resultado:
 
 ![promessa2](https://github.com/CITi-UFPE/Node-project/blob/master/assets/images/promessa2.PNG)
+
+Se você ainda está confuso com a vantagem de promessas recomendo a leitura dos seguinte links:
+[stackoverflow](https://stackoverflow.com/questions/22539815/arent-promises-just-callbacks)
+[tutorial de promessas](https://developers.google.com/web/fundamentals/primers/promises)
 
 ## Seu primeiro servidor HTTP usando Node
 
