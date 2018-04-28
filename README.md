@@ -434,7 +434,41 @@ A informação é armazenada em tabelas, e cada objeto inserido é representado 
 
 Dentro de um banco de dados SQL você define esquemas, isto é um esqueleto para a informação que você vai colocar. A montagem desse esquema é chamada de **modelagem de dados**. Nele você define o tipo de cada coluna, os relacionamentos entre as tabelas, dentre outras coisas.
 
+#### Vantagens de SQL
+
+SQL permite você a fazer queries complexas, relatórios complexos, em questão de segundos.
+SQL mantém os principios ACID, ou seja, Atomicidade, Consistencia, Isolamento e Durabilidade.
+
+Atomicidade: Na transação ou se faz tudo ou nada. Numa transação podemos ter mais de uma operação, por exemplo um venda: podemos criar um cliente novo, gerar uma nota fiscal e ter uma baixa no estoque, ao final desta transação, devemos confirmar a transação por inteiro e gravar todas estas operações, se esta transação não se confirmar ao final, nenhuma destas operações pode ser gravada no banco de dados, garantindo assim a atomicidade da transação
+
+Consistencia: Tem por objetivo garantir que o banco de dados antes da transação esteja consistente e, que após a transação o banco permaneça consistente, sem problemas de integridade. Neste ponto, podemos contribuir com o trabalho do banco de dados, criando mecanismos que evitem problemas de integridade como **triggers**
+
+Isolamento: Objetiva garantir que nenhuma transação seja interferida por outra até que ela seja completada. Ou seja se eu tento inserir 2 cliente simultaneamente insere-se um primeiro e o outro depois. No entanto existem transações que podem ocorrer de forma simultânea sob os mesmos dados, como por exemplo consultas.
+
+Durabilidade: Como o nome já pode nos remeter, esta propriedade garante que a informação gravada no banco de dados dure de forma imutável até que alguma outra transação de atualização, ou exclusão afete-a. Em termos mais populares, podemos dizer que este conceito garante que os dados não sejam corrompidos, ou seja, desapareçam ou se modifiquem sem motivo aparente.
+
+E esse principio, ACID, garante estabilidade, segurança e previsibilidade em todo o banco de dados e para cada transação. Esta previsibilidade, da uma facilidade de uso para o SQL, já que hoje, com pouco ou sem nenhum conhecimento da linguagem você ainda assim consegue trabalhar com ela usando ferramentas especiais, em Node isso nao é diferente já que podemos usar middlewares como **Sequelize** para nos auxiliar no quesito de bancos SQL.
+
+#### Desvantagens de SQL
+
+* Escalabilidade. Já que SQL tem tantas regras e segurança ele demora mais para processar informação. E existem sistemas que não precisam de tanta segurança quando falamos do ACD de ACID.
+
 ### NoSQL
+
+Os bancos de dados NoSQL ficaram bastante populares de 2010 para ca. Com NoSQL você não precisa definir um esquema e pode organizar seus dados em um json arbitrario. Isso é vantajoso em JavaScript já que podemos transformar qualquer objeto em JSON facilmente. Porém, tenha cuidado, você não consegue garantir consistencia em um banco NoSQL por conta da falta de um esquema. Você nunca sabe ao certo o que esta no banco de dados.
+
+#### Vantagens de NoSQL
+
+* A rapidez interativa. Por esse motivo NoSQL é utilizado quando se trabalha com sistemas em tempo real que necessitem fazer muitas transações rapidamente.
+* A eficiencia da escalabilidade. NoSQL é extremamente escalável, pode aumentar 100 vezes de tamanho e manter a mesma velocidade de trabalho.
+
+#### Desvantagens de NoSQL
+
+* Como NoSQL abrem mão do ACD de ACID, para serem mais escaláveis eles não conseguem fazer queries complexas, a informação é menos segura e uma leva de problemas. Nem toda aplicação precisa de tanta segurança, mas se você escolher NoSQL para sua aplicação garanta que ela não precisa.
+
+### Observação
+
+Importante mencionar que ao avaliar as vantagens e limitações de bancos de dados SQL e NoSQL, é importante lembrar que nem todos os produtos, SQL ou NoSQL, estão sujeitos aos mesmos problemas nem oferecem as mesmas vantagens no mesmo nível. Isto é, existem sistemas NoSQL mais escaláveis que outros por exemplo.
 
 ## We deploy / Heroku
 
