@@ -15,6 +15,7 @@ Em Node existem diversas formas de fazer o front-end, isto é, varias formas de 
 ## Começando a usar Node.js
 
 O que é Node.js? Node é um framework de desenvolvimento Javascript para back-end. Ou seja, um conjunto de bibliotecas javascript que trabalham em conjunto, otimizando o modo de se trabalhar com javascript para desenvolver servidores de aplicações WEB. Node é eficiente, leve e é baseado em **EVENTOS**, além disso ele usa libuv, uma biblioteca com foco em I/O assíncrono. Essas últimas duas informações são importantes, pois a programação em Node é em sua maioria assíncrona e, caso você não esteja familiarizado com esse tipo de programação, você pode ter um pouco de dificuldade.
+
 O node precisa de um arquivo dentro do seu projeto que contenha as informações mais importantes sobre seu projeto como: quais as dependências que seu projeto possui com aplicações de terceiros, scripts para facilitar a execução de comandos, versão do projeto, nome do autor, dentre outras. Esse arquivo é chamado de **package.json**.
 Esses scripts que acabei de mencionar são cortesia do nosso gerenciador de pacotes o NPM.
 
@@ -28,7 +29,7 @@ O node utiliza um sistema de gerenciamento de pacotes javascript chamado NPM, el
 Agora como eu uso?
 Bem similar ao pip, você pode instalar bibliotecas com o comando ```npm install nome_da_biblioteca``` e pode instalar globalmente usando a opção -g após o comando install: ```npm install -g biblioteca_Global```, neste caso a biblioteca fica armazenada em seu computador e não em uma pasta do projeto. Bibliotecas globais podem ser usadas por qualquer projeto a qualquer momento.
 
-Um bom exemplo de uma biblioteca que pode ser instalada globalmente é o **nodemon**, utilizada para reiniciar o servidor sempre que há mudança no código. Se ela for instalada globalmente ela pode funcionar no seu terminal fora dos scripts contidos no package.json falaremos dele logo adiante.
+Um bom exemplo de uma biblioteca que deve ser instalada globalmente é o **nodemon**, utilizada para reiniciar o servidor sempre que há mudança no código. Deve ser instalada globalmente para poder funcionar no seu terminal fora dos scripts contidos no package.json falaremos dele logo adiante.
 
 Outro lembrete importante é acrescentar a pasta node_modules no seu .gitignore, que contém todas as bibliotecas instaladas. Caso contrário seu projeto fica carregado de dados que poderiam ser re-adquiridos pela internet.
 Mas como seus colegas de trabalho vão saber que você instalou uma nova dependência? A maneira mais simples é usar a opção - save do NPM. Que automaticamente salva a dependência no seu **package.json**.
